@@ -2,18 +2,23 @@ package bank.core.entity.cards;
 
 import bank.core.entity.BankProduct;
 import bank.core.services.CardService;
+import lombok.Data;
 import lombok.Setter;
 
 import java.math.BigDecimal;
 
-import static bank.core.utils.UtilsClass.adjunctionForBankProd;
-import static bank.core.utils.UtilsClass.writeOffForBankProd;
+import static bank.core.utils.UtilsClass.*;
 
-@Setter
+@Data
 public class CreditCard extends BankProduct implements CardService {
 
     private double interestRate;
-    private BigDecimal debt;
+    private BigDecimal debt = convertStringToBigDecimal("0.000");
+
+
+
+    public CreditCard() {
+    }
 
     public CreditCard(String currency, BigDecimal balance, String name, double interestRate) {
         super(currency, balance, name);
@@ -21,14 +26,17 @@ public class CreditCard extends BankProduct implements CardService {
     }
 
     @Override
-    public void adjunction(BigDecimal amount) {
+    public void adjunction(String amount) {
         adjunctionForBankProd(this, amount);
+
+        if (this.getDebt().compareTo(convertStringToBigDecimal("0.000")) >= 0)
+        this.setDebt(this.getDebt().subtract(convertStringToBigDecimal(amount)));
     }
 
     @Override
-    public void writeOff(BigDecimal amount) {
+    public void writeOff(String amount) {
         writeOffForBankProd(this,amount);
-        debt = debt.add(amount);
+        this.setDebt(this.getDebt().add(convertStringToBigDecimal(amount)));
     }
 
     public BigDecimal getDebt() {
@@ -36,6 +44,6 @@ public class CreditCard extends BankProduct implements CardService {
     }
 
     public void checkDebt() {
-// Check and display debt information
+
     }
 }

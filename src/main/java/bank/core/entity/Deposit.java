@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 
+import static bank.core.enums.DepositStatus.CLOSED;
 import static bank.core.utils.UtilsClass.adjunctionForBankProd;
 
 
@@ -14,6 +15,10 @@ public class Deposit extends BankProduct {
 
     @Getter
     private String status;
+
+    public Deposit(){
+
+    }
 
     public Deposit(String currency, BigDecimal balance, String name, DepositStatus status) {
         super(currency, balance, name);
@@ -29,9 +34,12 @@ public class Deposit extends BankProduct {
     }
 
     @Override
-    public void adjunction(BigDecimal amount) {
+     public void adjunction(String amount) {
         adjunctionForBankProd(this, amount);
     }
 
+    public void closeDeposit(){
+        this.setStatus(CLOSED);
+    }
 
 }

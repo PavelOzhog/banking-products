@@ -18,14 +18,16 @@ public class DebitCard extends BankProduct implements CardService {
         super(currency, balance, name);
     }
 
+    public DebitCard(){
+    }
 
     @Override
-    public void adjunction(BigDecimal amount) {
+    public void adjunction(String amount) {
         adjunctionForBankProd(this, amount);
     }
 
     @Override
-    public void writeOff(BigDecimal amount) {
+    public void writeOff(String amount) {
         writeOffForBankProd(this, amount);
     }
 }

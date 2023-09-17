@@ -10,15 +10,16 @@ public abstract class BankProduct {
     protected BigDecimal balance;
     protected String name;
 
-    public BankProduct(String currency, BigDecimal balance, String name) {
+    protected BankProduct(String currency, BigDecimal balance, String name) {
         this.currency = currency;
         this.balance = balance;
         this.name = name;
     }
 
-    public abstract void adjunction(BigDecimal amount);
+    protected BankProduct() {
+    }
 
-
+    public abstract void adjunction(String amount);
 
     public BigDecimal getBalance() {
         return balance;
